@@ -84,5 +84,3 @@ Like the color of diamonds, the clarity of diamonds is also a useful indicator o
 ## Conclusion
 
 From the graphs above, we can have a basic idea of what determines the diamonds price. Carat, color and clarity are influential factors of diamonds price, while the effect of cut on diamonds price still needs further research. Furthermore, I am also very interested in the effect of brand on diamonds price. For example, how big is the difference for a same diamond from Tiffany and a unknown jewelry store. If such information become available in future, I will revise the study.
-
-Thanks for reading.
