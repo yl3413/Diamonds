@@ -1,0 +1,88 @@
+---
+title: "Diamonds Price"
+date: "August 27, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+data(diamonads)
+diamonds$color = with(diamonds, factor(color, levels = rev(levels(color))))
+```
+
+This is my first publication on RPubs. After taking the course Data Analysis with R on Udacity, I am very excited to do interesting exploratory data analysis and practice my R skills. This is a simple exploratory data analysis which investigates factors of diamonds price. I would like to see if there are any factors of diamonds price except carat.
+
+The diamonds data are provided by R. You can run data(diamonds) to import the data and you can run ?diamonds to learn more about the data set.
+
+## Carat and Diamonds Price
+
+First of all, let us plot price and carat. We can see the relationship between carat and price is pretty linear. However, we also notice that prices of diamonds vary given the carat is similar. Therefore, we need to look into other factors to see if they determine diamonds price.
+
+```{r cars, warning=FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point() + 
+  scale_y_log10() + 
+  xlim(c(0, quantile(diamonds$carat, 0.99))) + 
+  ylab('Price (log10)') + 
+  ggtitle('Price (log10) by Carat')
+```
+
+I choose three factors to investigate: cut, color, and clarity. These three variables are the most appealing ones in the data set. 
+
+## Cut and Diamonds Price
+
+Cut means quality of the cut, which includes Fair, Good, Very Good, Premium, Ideal. Ideal is the best quality. I Will modify the previous plot by adding the cut. 
+
+```{r cut, warning=FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = cut)) + 
+  scale_color_brewer(type = 'div',
+                     guide = guide_legend(title = 'Cut', reverse = T)) + 
+  scale_y_log10() + 
+  xlim(c(0, quantile(diamonds$carat, 0.99))) + 
+  ylab('Price (log10)') + 
+  ggtitle('Price (log10) by Carat and Cut')
+```
+
+It does not seem like cut is a very clear indicator of diamonds price. For example, given the same carat, we can see the Ideal cut can fall into anywhere. The price of a 1.25 ideal cut carat diamond ranges from $5,000 to $15,000.
+
+## Color and Diamonds Price
+
+Let us look into the relationship between color and diamonds price then. Diamond color ranges from J (worst) to D (best). 
+
+```{r color, warning=FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = color)) + 
+  scale_color_brewer(type = 'div',
+                     guide = guide_legend(title = 'Color', reverse = T)) + 
+  scale_y_log10() + 
+  xlim(c(0, quantile(diamonds$carat, 0.99))) + 
+  ylab('Price (log10)') + 
+  ggtitle('Price (log10) by Carat and Color')
+```
+
+It looks like diamond color is a very helpful indicator of diamond price. We can see clear layers across the graph. When carat is fixed, diamonds with better colors are more expensive. 
+
+## Clarity and Diamonds Price
+
+Finally, let us look into the relationship between clarity and diamonds price. Clarity is a measurement of how clear the diamond is (I1 (worst), SI1, SI2, VS1, VS2, VVS1, VVS2, IF (best)).
+
+```{r clarity, warning=FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(aes(color = clarity)) + 
+  scale_color_brewer(type = 'div',
+                     guide = guide_legend(title = 'Clarity', reverse = T)) + 
+  scale_y_log10() + 
+  xlim(c(0, quantile(diamonds$carat, 0.99))) + 
+  ylab('Price (log10)') + 
+  ggtitle('Price (log10) by Carat and Clarity')
+```
+
+Like the color of diamonds, the clarity of diamonds is also a useful indicator of diamonds price. Higher clarity leads to high price. 
+
+## Conclusion
+
+From the graphs above, we can have a basic idea of what determines the diamonds price. Carat, color and clarity are influential factors of diamonds price, while the effect of cut on diamonds price still needs further research. Furthermore, I am also very interested in the effect of brand on diamonds price. For example, how big is the difference for a same diamond from Tiffany and a unknown jewelry store. If such information become available in future, I will revise the study.
+
+Thanks for reading.
